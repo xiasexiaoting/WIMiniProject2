@@ -1,0 +1,26 @@
+user: alpha
+friends:	Beta	Charlie
+
+user: Beta
+friends:	alpha	Charlie
+
+user: Charlie
+friends:	alpha	Beta	Delta	Echo
+
+user: Delta
+friends:	Charlie	Echo	foxtrot	golf
+
+user: Echo
+friends:	Charlie	Delta	foxtrot	golf
+
+user: foxtrot
+friends:	Delta	Echo	golf	hotel
+
+user: golf
+friends:	Delta	Echo	foxtrot	hotel
+
+user: hotel
+friends:	foxtrot	golf	india
+
+user: india
+friends:	hotel
