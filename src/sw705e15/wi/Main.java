@@ -11,14 +11,18 @@ import org.jblas.ComplexDoubleMatrix;
 import org.jblas.DoubleMatrix;
 import org.jblas.Eigen;
 
-import sw705e15.wi.FriendshipsParser.FriendshipsData;
+import sw705e15.wi.FriendshipsParser.Cluster;
 import sw705e15.wi.Scissor.UnableToSplitFurtherException;
+import sw705e15.wi.sentiment.NaiveSentimentAnalytic;
 
 public class Main
 {
 	public static void main(final String[] args)
 	{
-		FriendshipsData data = null;
+		new NaiveSentimentAnalytic();
+		
+		/*
+		Cluster data = null;
 
 		try
 		{
@@ -30,15 +34,15 @@ public class Main
 			e.printStackTrace();
 		}
 
-		List<FriendshipsData> clusters = new ArrayList<>();
+		List<Cluster> clusters = new ArrayList<>();
 		clusters.add(data);
-		List<FriendshipsData> tempClusters;
+		List<Cluster> tempClusters;
 
-		for (int recursionLevelsCounter = 0; recursionLevelsCounter < 6; recursionLevelsCounter++)
+		for (int recursionLevelsCounter = 0; recursionLevelsCounter < 20; recursionLevelsCounter++)
 		{
 			tempClusters = new ArrayList<>();
 
-			for (FriendshipsData cluster : clusters)
+			for (Cluster cluster : clusters)
 			{
 				try
 				{
@@ -54,6 +58,7 @@ public class Main
 		}
 
 		return;
+		*/
 	}
 
 }

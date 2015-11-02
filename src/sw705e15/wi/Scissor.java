@@ -6,14 +6,12 @@ import java.util.Comparator;
 import org.jblas.DoubleMatrix;
 import org.jblas.Eigen;
 
-import sw705e15.wi.FriendshipsParser.FriendshipsData;
+import sw705e15.wi.FriendshipsParser.Cluster;
 
 public class Scissor
 {
-	public static FriendshipsData[] Cut(final FriendshipsData data)
+	public static Cluster[] Cut(final Cluster data)
 	{
-		//System.out.println("Step 1!");
-
 		final DoubleMatrix adjacency = new DoubleMatrix(data.friendsMatrix);
 		final DoubleMatrix degree = new DoubleMatrix(data.friendsMatrix.length, data.friendsMatrix.length);
 
@@ -29,13 +27,8 @@ public class Scissor
 			degree.put(rowIndexCounter, rowIndexCounter, sum);
 		}
 
-		//System.out.println("Step 2!");
-
 		final DoubleMatrix laplacian = degree.sub(adjacency);
-
 		final DoubleMatrix eigenvectors = Eigen.symmetricEigenvectors(laplacian)[0];
-
-		//System.out.println("Step 3!");
 
 		if(eigenvectors.columns == 1)
 		{
@@ -43,7 +36,6 @@ public class Scissor
 		}
 		
 		final DoubleMatrix THEEigenvector = eigenvectors.getColumn(1);
-		
 		final ArrayList<Pair<Integer, Double>> vectorValuesWithOriginalIndexes = new ArrayList<>();
 
 		for (int rowIndexCounter = 0; rowIndexCounter < THEEigenvector.length; rowIndexCounter++)
@@ -56,7 +48,8 @@ public class Scissor
 			@Override
 			public int compare(final Pair<Integer, Double> o1, final Pair<Integer, Double> o2)
 			{
-				return (int) ((o1.item2 * 10000000) - (o2.item2 * 10000000));
+				//return (int) ((o1.item2 * 10000000) - (o2.item2 * 10000000));
+				return Double.compare(o1.item2, o2.item2);
 			}
 		});
 
@@ -82,21 +75,20 @@ public class Scissor
 			}
 		}
 
-		//System.out.println("Step 4!");
 		System.out.println("The cut should be between user: '" + data.indexToNameMapping.get(biggestDiffPair1.item1) + "' and user: '"
 				+ data.indexToNameMapping.get(biggestDiffPair2.item1) + "'");
 		
-		final FriendshipsData cluster1 = splitFromIndexToIndexWithData(0, splitIndex + 1, vectorValuesWithOriginalIndexes, data);
-		final FriendshipsData cluster2 = splitFromIndexToIndexWithData(splitIndex + 1, vectorValuesWithOriginalIndexes.size(), vectorValuesWithOriginalIndexes,
+		final Cluster cluster1 = splitFromIndexToIndexWithData(0, splitIndex + 1, vectorValuesWithOriginalIndexes, data);
+		final Cluster cluster2 = splitFromIndexToIndexWithData(splitIndex + 1, vectorValuesWithOriginalIndexes.size(), vectorValuesWithOriginalIndexes,
 				data);
 
-		return new FriendshipsData[]{cluster1, cluster2};
+		return new Cluster[]{cluster1, cluster2};
 	}
 
-	public static FriendshipsData splitFromIndexToIndexWithData(final int startIndex, final int endIndex,
-			final ArrayList<Pair<Integer, Double>> sortedEigenMatrix, final FriendshipsData data)
+	public static Cluster splitFromIndexToIndexWithData(final int startIndex, final int endIndex,
+			final ArrayList<Pair<Integer, Double>> sortedEigenMatrix, final Cluster data)
 	{
-		final FriendshipsData cluster = new FriendshipsData(data.indexToNameMapping.size() / 2);
+		final Cluster cluster = new Cluster(data.indexToNameMapping.size() / 2);
 
 		for (int clusterIndex = startIndex; clusterIndex < endIndex; clusterIndex++)
 		{

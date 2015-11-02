@@ -9,22 +9,22 @@ import java.util.List;
 
 public class FriendshipsParser
 {
-	public static class FriendshipsData
+	public static class Cluster
 	{
 		protected HashMap<String, Integer> nameToIndexMapping;
 		protected List<String> indexToNameMapping;
 		protected double[][] friendsMatrix;
 		
-		FriendshipsData(final int hint)
+		public Cluster(final int hint)
 		{
 			nameToIndexMapping = new HashMap<>(hint);
 			indexToNameMapping = new ArrayList<>(hint);
 		}
 	}
 
-	public static FriendshipsData parseFriendshipsFile() throws IOException
+	public static Cluster parseFriendshipsFile() throws IOException
 	{
-		final FriendshipsData data = new FriendshipsData(5000);
+		final Cluster data = new Cluster(5000);
 		final BufferedReader inFile = new BufferedReader(new FileReader("data\\friendships.txt"));
 		//final BufferedReader inFile = new BufferedReader(new FileReader("data\\newfriendships.txt"));
 		final List<ArrayList<String>> friends = new ArrayList<>();
@@ -99,5 +99,4 @@ public class FriendshipsParser
 
 		return data;
 	}
-
 }
